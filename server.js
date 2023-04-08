@@ -26,8 +26,6 @@ mongoose
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// APIs using Express
-
 // API to create a user
 app.post("/users", async (req, res) => {
   try {
@@ -135,6 +133,6 @@ async function getFriends(user, level, friends) {
 }
 
 // Start the server
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Server is running on port 3000");
 });
