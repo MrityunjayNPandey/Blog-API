@@ -45,7 +45,7 @@ app.post("/blogs", async (req, res) => {
     const blog = await Blog.create({
       title,
       content,
-      author: req.body.authorID,
+      author: req.body.authorID, //The object ID of the user object
     });
     const user = await User.findById(req.body.authorID).exec();
     console.log(user);
