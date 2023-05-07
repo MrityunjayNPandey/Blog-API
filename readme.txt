@@ -73,3 +73,12 @@ backend language and database choice are accepted.
 Submission:
 1. Github link with steps to run and execute the code.
 2. A README on the Github explaining the approach taken.
+
+
+in the database:
+
+1  2  3
+
+1  2  4
+2  4  6
+3  5  1
