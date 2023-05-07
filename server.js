@@ -108,6 +108,9 @@ async function getFriends(user, level, friends, repfriends) {
   if (level === 0) {
     return;
   }
+  if (repfriends.has(user)) {
+    return;
+  }
   // Get first level friends
   const comments = await Comment.find({ user: user._id }).populate("blog");
   const firstLevelFriends = new Set();
