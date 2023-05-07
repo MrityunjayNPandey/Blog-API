@@ -5,7 +5,7 @@ To add items to the Users:
 Give a POST request to "https://blog-api-seven-pi.vercel.app/users" with "name" and "email" within the body(In JSON format).
 
 To add items to the Blogs(associated with user):
-Give a POST request to "https://blog-api-seven-pi.vercel.app/blogs" with "title", "content" and "userId"(the object id that you get while making User object) within the body(In JSON format).
+Give a POST request to "https://blog-api-seven-pi.vercel.app/blogs" with "title", "content" and "authorID"(the object id that you get while making User object) within the body(In JSON format).
 
 To add items to the Comments(associated with Blogs and user):
 Give a POST request to "https://blog-api-seven-pi.vercel.app/comments" with "content", "userId"(the object id that you get while making User object) and "blogId"(the object id that you get while making Blog object) within the body(In JSON format).

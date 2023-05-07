@@ -90,8 +90,12 @@ app.get("/users/:userId/level/:levelNo", async (req, res) => {
     }
 
     const friends = new Set(); // Using Set to avoid duplicates
-    await getFriends(user, parseInt(levelNo), friends);
-
+    const repfriends = new Set();
+    await getFriends(user, parseInt(levelNo), friends, repfriends);
+    friends.delete(userId);
+    for (const friendId of repfriends) {
+      friends.delete(friendId);
+    }
     res.json(Array.from(friends));
   } catch (err) {
     console.error("Failed to get friends", err);
@@ -100,11 +104,10 @@ app.get("/users/:userId/level/:levelNo", async (req, res) => {
 });
 
 // Helper function to recursively get friends of a user up to a given level
-async function getFriends(user, level, friends) {
+async function getFriends(user, level, friends, repfriends) {
   if (level === 0) {
     return;
   }
-
   // Get first level friends
   const comments = await Comment.find({ user: user._id }).populate("blog");
   const firstLevelFriends = new Set();
@@ -121,14 +124,20 @@ async function getFriends(user, level, friends) {
   }
 
   // Add first level friends to result set
-  for (const friendId of firstLevelFriends) {
-    friends.add(friendId);
+  if (level === 1) {
+    for (const friendId of firstLevelFriends) {
+      friends.add(friendId);
+    }
+  } else {
+    for (const friendId of firstLevelFriends) {
+      repfriends.add(friendId);
+    }
   }
 
   // Recursively get friends of first level friends
   for (const friendId of firstLevelFriends) {
     const friend = await User.findById(friendId);
-    await getFriends(friend, level - 1, friends);
+    await getFriends(friend, level - 1, friends, repfriends);
   }
 }
 
